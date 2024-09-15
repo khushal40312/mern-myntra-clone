@@ -82,6 +82,7 @@ export default function FetchItems(props) {
                     }
                 });
                 const json = await response.json();
+                console.log(json)
                 dispatch(bagActions.cartItems(json));
             } catch (error) {
                 console.error('Failed to fetch cart items:', error);
