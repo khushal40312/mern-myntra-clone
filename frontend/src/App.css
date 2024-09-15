@@ -647,7 +647,7 @@ width: 138vw;
 
 .left_slide li {
   list-style-type: none;
-  margin: 20px 0;
+  margin: 5px 0;
 }
 
 .left_slide li a {
@@ -741,7 +741,7 @@ p strong{
     align-items: center;
   }
   .left_slide ul{
-width: 300px;
+width: 266px;
 border-radius: 10px;
     border: 3px solid pink;
   }
