@@ -494,7 +494,9 @@ height: 30vh;
    border-radius: 10px;
 }
 
-
+.left_slide {
+  display: none;
+}
 
 
 
@@ -679,7 +681,7 @@ width: 138vw;
 }
 #mobileImage {
   display: none;
-
+}  
 p strong{
 
   border: 3px solid pink;
@@ -1042,6 +1044,10 @@ width: 99vw;
 
 width: 99vw;
 }
+  .footer_container{
+  margin-left:20px;
+  
+  }
 }
 
 @media (max-width: 590px) {
