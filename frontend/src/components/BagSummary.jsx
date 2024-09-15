@@ -33,7 +33,7 @@ export default function BagSummary() {
      const headers = { "Content-Type": "application/json" };
 
      try {
-       const response = await fetch("http://localhost:8009/api/items/create-checkout-session", {
+       const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/create-checkout-session", {
          method: "POST",
          headers,
          body: JSON.stringify(body),
