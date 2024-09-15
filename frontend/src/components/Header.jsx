@@ -29,7 +29,7 @@ export default function Header() {
 
     const userDetail = async () => {
       try {
-        const response = await fetch("http://localhost:8009/api/auth/getuser", {
+        const response = await fetch("https://myntra-clone-mern.onrender.com/api/auth/getuser", {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -215,7 +215,7 @@ export default function Header() {
               objectFit: "cover",
               border: "4px solid pink"
             }}
-            src={`http://localhost:8009/uploads${userData.picture?.split('/uploads')[1]}`}
+            src={`https://myntra-clone-mern.onrender.com/uploads${userData.picture?.split('/uploads')[1]}`}
             alt="Profile"
           />
         </div>
@@ -248,7 +248,7 @@ export default function Header() {
         <button onClick={toggleLeftSlide} className="close_btn">✕</button>
         {userData && (
           <div className="user_info">
-            <img className="user_image" src={`http://localhost:8009/uploads${userData.picture.split('/uploads')[1]}`} alt="User" />
+            <img className="user_image" src={`https://myntra-clone-mern.onrender.com/uploads${userData.picture.split('/uploads')[1]}`} alt="User" />
             <p>{userData.name}</p>
           </div>
           
