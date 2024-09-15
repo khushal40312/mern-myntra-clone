@@ -3,7 +3,6 @@ const connectToMongo = require('./db');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
-const path = require('path');
 require('dotenv').config();
 
 // Initialize MongoDB connection
@@ -39,20 +38,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// Define API routes
+// Define routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/items', require('./routes/items'));
 app.use('/uploads', express.static('uploads'));
-
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-// Serve index.html for all other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
+app.use(express.static('resources'));
 
 const port = process.env.PORT || 8009;
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  console.log(Server is running on port ${port});
 });
