@@ -6,15 +6,16 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const JWT_SECRET = process.env.JWT_SECRET;
-const uploadPath = process.env.UPLOAD_DIR;
+const path = require('path');
+// const uploadPath = process.env.UPLOAD_DIR;
 const multer = require('multer');
 
 // create a user using POST "/api/auth doesnt require auth"
-
+const uploadPath = path.join(__dirname, '..', 'uploads');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, process.env.UPLOAD_DIR); // folder where the files will be stored
+    cb(null, uploadPath); // folder where the files will be stored
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname); // unique filename
