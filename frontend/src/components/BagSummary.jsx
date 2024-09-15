@@ -27,7 +27,7 @@ export default function BagSummary() {
        return;
      }
 
-     const stripe = await loadStripe("your-public-stripe-key");
+     const stripe = await loadStripe("pk_test_51Pyq0yLoogz1SBLrYKOeiBcOJMzY4P3tjYznMWPc04eXhMaq7i9S6jDdMFDt389bvhnTvCezJzVhPogsKhoqjJkZ00LTZ9sdJm");
      
      const body = { product: BagItems[0] };
      const headers = { "Content-Type": "application/json" };
