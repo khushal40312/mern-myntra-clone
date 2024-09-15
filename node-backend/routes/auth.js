@@ -14,7 +14,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "/home/khushal/myntra-clone-react/node-backend/uploads"); // folder where the files will be stored
+    cb(null, process.env.UPLOAD_DIR); // folder where the files will be stored
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname); // unique filename
