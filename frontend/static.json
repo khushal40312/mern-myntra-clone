@@ -4,6 +4,10 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ]
+  ],
+  "headers": {
+    "/path/*": {
+      "X-Frame-Options": "DENY"
+    }
+  }
 }
-
