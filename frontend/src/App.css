@@ -190,25 +190,6 @@ header {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .category-items, 
-
-
-*/
-
 .footer_container {
   padding: 30px 0px 40px 0px;
   background: #fafbfc;
@@ -246,7 +227,7 @@ header {
   width: 200px;
 
   margin: 10px;
-} */
+} 
 .item-image {
   width: 100%;
   transition: transform 0.2s;
@@ -307,7 +288,6 @@ header {
   margin-top: 8px;
   font-size: 18px;
   width: 100%;
-  /* background-color: lightgreen; */
   border: none;
   padding: 5px 15px;
   border-radius: 10px;
@@ -332,12 +312,9 @@ header {
 .action_container {
   text-decoration: none;
 }
-/* a.action_container:link {
-  color:black;
-} */
 
 .bag-items-container {
-  /* overflow: scroll; */
+ 
   max-height: 60vh;
   overflow-y: auto;
 
@@ -349,7 +326,7 @@ header {
   color: #282c3f;
   font-size: 13px;
   line-height: 1.42857143;
-  /* max-height: 30vh; */
+ 
 }
 
 .bag-page {
@@ -481,16 +458,7 @@ header {
   margin-top: 5px;
   margin-left: -3px;
 }
-/* .empty-Cart{
 
-  max-height: 60vh;
-  width: 64%;
-height: 30vh;
-
-} */
-/* .action_name{
-  text-decoration: none;
-} */
 .action_containerpr {
   position: relative;
 
@@ -504,14 +472,14 @@ height: 30vh;
   display: none;
   position: absolute;
   top: 20px;
-  /* right: 20; */
+
   left: -200px;
   width: 16vw;
   padding: 15px;
   background-color: #f9f9f9;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  /* right: 102%; */
+
   height: 40vh;
 
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
@@ -538,16 +506,7 @@ height: 30vh;
 .btn-danger:hover {
   opacity: 0.8;
 }
-/* .item-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid rgb(211, 206, 206);
-  width: 300px; 
-  text-align: center;
-  
-  border-radius: 10px;
-} */
+
 
 .item-image {
   width: 100%;
@@ -704,12 +663,7 @@ height: 30vh;
   max-width: 100%; /* Ensures the image does not exceed the container's width */
 }
 
-/* .slider-cont{
 
-
-width: 138vw;
-
-} */
 
 .left_slide {
   position: fixed;
@@ -1108,29 +1062,7 @@ p strong {
   }
 }
 
-/* Container that holds all items */
-/* .items-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-  margin: 40px auto;
-  gap: 20px;
-} */
 
-/* .item-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid rgb(211, 206, 206);
-  padding: 10px;
-  width: 23%;
-  text-align: center;
-  border-radius: 10px;
-  box-sizing: border-box; 
-} */
-
-/* Image styling */
 .item-image {
   width: 100%;
   height: 180px; /* Reduced height */
@@ -1165,9 +1097,7 @@ p strong {
 
 /* Responsive styles */
 @media (max-width: 1424px) {
-  /* .item-container {
-    width: 30%; 
-  } */
+ 
   .form-outline input {
     width: 500px;
   }
