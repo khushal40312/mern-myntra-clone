@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { Toaster } from 'react-hot-toast';
 import { IoIosSearch } from "react-icons/io";
 import { CiLogout } from "react-icons/ci";
+import { FaWindowClose } from "react-icons/fa"
 export default function Header() {
   const BagItems = useSelector(store => store.bag);
   const items = useSelector(store => store.items);
@@ -245,7 +246,7 @@ export default function Header() {
 
       {/* Left Slide for mobile view */}
       <div className={`left_slide ${isLeftSlideOpen ? 'open' : ''}`}>
-        <button onClick={toggleLeftSlide} className="close_btn">✕</button>
+        <button onClick={toggleLeftSlide} className="close_btn"><FaWindowClose size={29} /></button>
         {userData && (
           <div className="user_info">
             <img className="user_image" src={`https://myntra-clone-mern.onrender.com/uploads${userData.picture.split('/uploads')[1]}`} alt="User" />
