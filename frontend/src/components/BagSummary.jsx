@@ -1,56 +1,38 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { loadStripe } from '@stripe/stripe-js';
+import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-
+import { useNavigate } from 'react-router-dom';
+import { placeOrder } from '../store/orderSlice';
+ 
 
 export default function BagSummary() {
-   const BagItems = useSelector(store => store.bag);
-   
-   let totalItem = BagItems[0] ? BagItems[0].length : 0;
-   let totalMRP = 0;
-   let totalDiscount = 0;
-   const CONVENIENCE_FEES = 99;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();  // Get the dispatch function
+  const BagItems = useSelector((store) => store.bag);
+  
+  let totalItem = BagItems[0] ? BagItems[0].length : 0;
+  let totalMRP = 0;
+  let totalDiscount = 0;
+  const CONVENIENCE_FEES = 0;
 
-   if (BagItems[0]) {
-     BagItems[0].forEach(bagItem => {
-       totalMRP += bagItem.original_price;
-       totalDiscount += bagItem.original_price - bagItem.current_price;
-     });
-   }
+  if (BagItems[0]) {
+    BagItems[0].forEach((bagItem) => {
+      totalMRP += bagItem.original_price;
+      totalDiscount += bagItem.original_price - bagItem.current_price;
+    });
+  }
 
-   let finalPayment = totalItem === 0 ? 0 : (totalMRP - totalDiscount + CONVENIENCE_FEES);
+  let finalPayment = totalItem === 0 ? 0 : totalMRP - totalDiscount + CONVENIENCE_FEES;
 
-   const placeorder = async () => {
-     if (totalItem === 0) {
-       toast.error("No items in the cart to place an order.");
-       return;
-     }
-
-     const stripe = await loadStripe("pk_test_51Pyq0yLoogz1SBLrYKOeiBcOJMzY4P3tjYznMWPc04eXhMaq7i9S6jDdMFDt389bvhnTvCezJzVhPogsKhoqjJkZ00LTZ9sdJm");
-     
-     const body = { product: BagItems[0] };
-     const headers = { "Content-Type": "application/json" };
-
-     try {
-       const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/create-checkout-session", {
-         method: "POST",
-         headers,
-         body: JSON.stringify(body),
-       });
-       const session = await response.json();
-
-       const result = await stripe.redirectToCheckout({ sessionId: session.id });
-       if (result.error) {
-         console.error(result.error);
-         toast.error("Stripe error occurred: " + result.error.message);
-       }
-     } catch (error) {
-       console.error("Error during checkout:", error);
-       toast.error("Failed to create checkout session.");
-     }
-   };
-
+  const placeOrders = () => {
+    if (totalItem === 0) {
+      toast.error("No items in the cart to place an order.");
+    } else {
+      navigate('/address');
+      dispatch(placeOrder()); 
+    }
+  };
+  
    return (
      <>
        <div className="bag-details-container">
@@ -60,21 +42,21 @@ export default function BagSummary() {
            <span className="price-item-value">₹{totalMRP}</span>
          </div>
          <div className="price-item">
-           <span className="price-item-tag">Discount on MRP</span>
+           <span className="price-item-tag"> Total Discount on MRP</span>
            <span className="price-item-value priceDetail-base-discount">-₹{totalDiscount}</span>
          </div>
-         <div className="price-item">
+         {/* <div className="price-item">
            <span className="price-item-tag">Convenience Fee</span>
            <span className="price-item-value">₹{totalItem === 0 ? 0 : CONVENIENCE_FEES}</span>
-         </div>
+         </div> */}
          <hr />
          <div className="price-footer">
            <span className="price-item-tag">Total Amount</span>
            <span className="price-item-value">₹{finalPayment}</span>
          </div>
        </div>
-       <button className="btn-place-order" onClick={placeorder} >
-         <div className="css-xjhrni">PLACE ORDER</div>
+       <button style={{cursor:"pointer"}} className="btn-place-order" onClick={placeOrders} >
+         <div className="css-xjhrni">PROCEED</div>
        </button>
      </>
    );
