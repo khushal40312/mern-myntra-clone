@@ -22,7 +22,7 @@ export default function MyOrders() {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    fetch("http://localhost:8009/api/items/trackOrder", {
+    fetch("https://myntra-clone-mern.onrender.com/api/items/trackOrder", {
       method: 'GET',
       headers: {
         'auth-token': token,
@@ -92,7 +92,7 @@ export default function MyOrders() {
   const submitCancelOrder = () => {
     const token = localStorage.getItem('token');
 
-    fetch(`http://localhost:8009/api/items/deleteOrder/${selectedOrderId}`, {
+    fetch(`https://myntra-clone-mern.onrender.com/api/items/deleteOrder/${selectedOrderId}`, {
       method: 'DELETE',
       headers: {
         'auth-token': token,
