@@ -15,7 +15,7 @@ export default function FetchItems(props) {
         const getitems = async () => {
             try {
                 dispatch(fetchStatusActions.markFetchingStarted());
-                const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/allitems", {
+                const response = await fetch("http://localhost:8009/api/items/allitems", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ export default function FetchItems(props) {
     // Add item to cart
     const AddToCart = async (items) => {
         try {
-            const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/addusercartItems", {
+            const response = await fetch("http://localhost:8009/api/items/addusercartItems", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ export default function FetchItems(props) {
     // Delete item from cart
     const deleteItem = async (id) => {
         try {
-            const response = await fetch(`https://myntra-clone-mern.onrender.com/api/items/deleteitem/${id}`, {
+            const response = await fetch(`http://localhost:8009/api/items/deleteitem/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export default function FetchItems(props) {
 
         const getCarts = async () => {
             try {
-                const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/fetchallusercartItems", {
+                const response = await fetch("http://localhost:8009/api/items/fetchallusercartItems", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -82,7 +82,6 @@ export default function FetchItems(props) {
                     }
                 });
                 const json = await response.json();
-                console.log(json)
                 dispatch(bagActions.cartItems(json));
             } catch (error) {
                 console.error('Failed to fetch cart items:', error);
@@ -90,7 +89,7 @@ export default function FetchItems(props) {
         };
 
         getCarts();
-    }, [dispatch, isLoggedIn]);  // Dependency on isLoggedIn
+    }, [isLoggedIn,dispatch]);  // Dependency on isLoggedIn
 
   
     return (
