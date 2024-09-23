@@ -42,7 +42,7 @@ margin-left: -6px;
 
 /* Close button inside the dropdown */
 .close-btn {
-    background-color: rgb(255, 63, 108);
+    background-color: rgb(168, 114, 154);;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -227,3 +227,17 @@ margin-left: -6px;
     width: 99vw;
 }}
 
+.payment-options{
+
+    
+    border-radius: 7px !important;
+    border: 3px solid #c5adad !important;
+    padding: 13px !important;
+    margin-top: 11px !important;
+
+}
+.form-check-input:checked {
+    background-color: #ff98aa !important;
+    border-color: #ff98aa  !important;
+    
+}
