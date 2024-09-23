@@ -18,7 +18,7 @@ export default function Bag() {
     const { deleteItem } = context;
     const dispatch = useDispatch();
     const bagItems = useSelector(store => store.bag);
-    console.log(bagItems)
+    // console.log(bagItems)
     const handleRemoveItemBag = (id) => {
                    dispatch(bagActions.removeToBag(id));
                    deleteItem(id)
