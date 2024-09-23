@@ -53,7 +53,7 @@ router.post('/createuser',
         name: req.body.name,
         email: req.body.email,
         password: securePass,
-        picture: req.file ? req.file.path : null, // Store file path in the database
+        picture: req.file ? req.file.path : 'node-backend/uploads/defProfile.jpg', // Store file path in the database
         gender: req.body.gender,
         mobile: req.body.mobile,
       });
