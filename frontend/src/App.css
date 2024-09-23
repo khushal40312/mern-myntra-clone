@@ -1201,7 +1201,7 @@ p strong {
 }
 @media (max-width: 480px) {
   .form-outline input {
-    width: 300px;
+    width: 227px;
   }
   .columnadmin {
     flex-direction: column;
