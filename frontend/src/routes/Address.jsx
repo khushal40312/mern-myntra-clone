@@ -42,7 +42,7 @@ export default function Address() {
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
-        const response = await fetch("http://localhost:8009/api/items/getAddress", {
+        const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/getAddress", {
           method: 'GET',
           headers: {
             'auth-token': token,
@@ -84,7 +84,7 @@ export default function Address() {
   const handleAddAddress = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8009/api/items/saveAddress", {
+      const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/saveAddress", {
         method: 'POST',
         headers: {
           'auth-token': token,
@@ -103,7 +103,7 @@ export default function Address() {
 
   const handleRemoveAddress = async () => {
     try {
-      const response = await fetch("http://localhost:8009/api/items/deleteAddress", {
+      const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/deleteAddress", {
         method: 'DELETE',
         headers: {
           'auth-token': token,
@@ -143,7 +143,7 @@ export default function Address() {
     if (paymentMethod === 'cash') {
       // Handle Cash on Delivery
       try {
-        const response = await fetch("http://localhost:8009/api/items/createOrder", {
+        const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/createOrder", {
           method: "POST",
           headers: {
             'auth-token': token,
@@ -166,7 +166,7 @@ export default function Address() {
     } else if (paymentMethod === "online") {
       // Handle Stripe payment and create order first
       try {
-        const createOrderResponse = await fetch("http://localhost:8009/api/items/createOrder", {
+        const createOrderResponse = await fetch("https://myntra-clone-mern.onrender.com/api/items/createOrder", {
           method: "POST",
           headers: {
             'auth-token': token,
@@ -187,7 +187,7 @@ export default function Address() {
         const body = { product: BagItems[0] };
         const headers = { "Content-Type": "application/json" };
 
-        const response = await fetch("http://localhost:8009/api/items/create-checkout-session", {
+        const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/create-checkout-session", {
           method: "POST",
           headers,
           body: JSON.stringify(body),
