@@ -24,7 +24,7 @@ export default function AdminPanel2() {
     useEffect(() => {
         const token = localStorage.getItem('token');
 
-        const fetchOrders = fetch("http://localhost:8009/api/items/allOrders", {
+        const fetchOrders = fetch("https://myntra-clone-mern.onrender.com/api/items/allOrders", {
             method: 'GET',
             headers: {
                 'auth-token': token,
@@ -32,7 +32,7 @@ export default function AdminPanel2() {
             },
         }).then(response => response.json());
 
-        const fetchAddresses = fetch("http://localhost:8009/api/items/getAllAddresses", {
+        const fetchAddresses = fetch("https://myntra-clone-mern.onrender.com/api/items/getAllAddresses", {
             method: 'GET',
             headers: {
                 'auth-token': token,
@@ -111,7 +111,7 @@ export default function AdminPanel2() {
     // A helper function to refetch orders and addresses
     const fetchOrdersAndAddresses = () => {
         const token = localStorage.getItem('token');
-        const fetchOrders = fetch("http://localhost:8009/api/items/allOrders", {
+        const fetchOrders = fetch("https://myntra-clone-mern.onrender.com/api/items/allOrders", {
             method: 'GET',
             headers: {
                 'auth-token': token,
@@ -119,7 +119,7 @@ export default function AdminPanel2() {
             },
         }).then(response => response.json());
 
-        const fetchAddresses = fetch("http://localhost:8009/api/items/getAllAddresses", {
+        const fetchAddresses = fetch("https://myntra-clone-mern.onrender.com/api/items/getAllAddresses", {
             method: 'GET',
             headers: {
                 'auth-token': token,
