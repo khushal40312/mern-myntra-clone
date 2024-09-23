@@ -48,7 +48,7 @@ export default function Signup() {
         } 
 
         try {
-            const response = await fetch("http://localhost:8009/api/auth/createuser", {
+            const response = await fetch("https://myntra-clone-mern.onrender.com/api/auth/createuser", {
                 method: 'POST',
                 body: formData
             });
