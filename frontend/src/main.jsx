@@ -1,45 +1,93 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './routes/App.jsx';
-import Home from './routes/Home.jsx';
 import './Dropdown.css';
 import './App.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import myntrastore from './store/index.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Beauty from './routes/Beauty.jsx';
-import Homeliving from './routes/Homeliving.jsx';
-import Women from './routes/Women.jsx';
-import Kids from './routes/Kids.jsx';
-import Login from './routes/Login.jsx';
-import Signup from './routes/Signup.jsx';
-import AdminPanel from './routes/AdminPanel.jsx';
-import Men from './routes/Men.jsx';
-import Electronics from './routes/Electronics.jsx';
-import Success from './routes/Success.jsx';
-import Cancel from './routes/Cancel.jsx';
+import LoadingSpinner from './components/LoadingSpinner.jsx'; // Import the LoadingSpinner
+
+
+// Lazy load components
+const App = lazy(() => import('./routes/App.jsx'));
+const Home = lazy(() => import('./routes/Home.jsx'));
+const Beauty = lazy(() => import('./routes/Beauty.jsx'));
+const Homeliving = lazy(() => import('./routes/Homeliving.jsx'));
+const Women = lazy(() => import('./routes/Women.jsx'));
+const Kids = lazy(() => import('./routes/Kids.jsx'));
+const Login = lazy(() => import('./routes/Login.jsx'));
+const Signup = lazy(() => import('./routes/Signup.jsx'));
+const AdminPanel = lazy(() => import('./routes/AdminPanel.jsx'));
+const Men = lazy(() => import('./routes/Men.jsx'));
+const Electronics = lazy(() => import('./routes/Electronics.jsx'));
+const Success = lazy(() => import('./routes/Success.jsx'));
+const Cancel = lazy(() => import('./routes/Cancel.jsx'));
+const MyOrders = lazy(() => import('./routes/MyOrders.jsx'));
+const Address = lazy(() => import('./routes/Address.jsx'));
+const AdminPanel2 = lazy(() => import("./routes/AdminPanel2.jsx"))
+const GiftCard = lazy(() => import("./routes/GiftCard.jsx"))
+const HelpAndSupport = lazy(() => import("./routes/HelpAndSupport.jsx"))
+const ReturnPolicy = lazy(() => import("./routes/ReturnPolicy.jsx"))
+const FAQ = lazy(() => import("./routes/FAQ.jsx"))
+const OurStory = lazy(() => import("./routes/OurStory.jsx"))
+const Careers = lazy(() => import("./routes/Careers.jsx"))
+const Press = lazy(() => import("./routes/Press.jsx"))
+const InvestorRelations = lazy(() => import("./routes/InvestorRelations.jsx"))
+const PrivacyPolicy = lazy(() => import("./routes/PrivacyPolicy.jsx"))
+const TermOfServices = lazy(() => import("./routes/TermOfServices.jsx"))
+
+
+
+
+
+
+
+
+
+
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Suspense fallback={<LoadingSpinner />}><App /></Suspense>,
     children: [
-      { path: "/", element: <Home /> },
-      { path: "/men", element: <Men /> }, // Men route
-      { path: "/beauty", element: <Beauty /> }, // Beauty route
-      { path: "/homeliving", element: <Homeliving /> }, // HomeLiving route
-      { path: "/studio", element: <Electronics /> }, // Studio route
-      { path: "/women", element: <Women /> }, // Women route
-      { path: "/kids", element: <Kids /> }, // Kids route
-      { path: "/login", element: <Login /> }, // Login route
-      { path: "/signup", element: <Signup /> },
-      { path: "/adminpanel", element: <AdminPanel /> },
-      { path: "/success", element: <Success /> },
+      { path: "/", element: <Suspense fallback={<LoadingSpinner />}><Home /></Suspense> },
+      { path: "/men", element: <Suspense fallback={<LoadingSpinner />}><Men /></Suspense> },
+      { path: "/beauty", element: <Suspense fallback={<LoadingSpinner />}><Beauty /></Suspense> },
+      { path: "/homeliving", element: <Suspense fallback={<LoadingSpinner />}><Homeliving /></Suspense> },
+      { path: "/studio", element: <Suspense fallback={<LoadingSpinner />}><Electronics /></Suspense> },
+      { path: "/women", element: <Suspense fallback={<LoadingSpinner />}><Women /></Suspense> },
+      { path: "/kids", element: <Suspense fallback={<LoadingSpinner />}><Kids /></Suspense> },
+      { path: "/login", element: <Suspense fallback={<LoadingSpinner />}><Login /></Suspense> },
+      { path: "/signup", element: <Suspense fallback={<LoadingSpinner />}><Signup /></Suspense> },
+      { path: "/adminpanel", element: <Suspense fallback={<LoadingSpinner />}><AdminPanel /></Suspense> },
+      { path: "/success", element: <Suspense fallback={<LoadingSpinner />}><Success /></Suspense> },
+      { path: "/cancel", element: <Suspense fallback={<LoadingSpinner />}><Cancel /></Suspense> },
+      { path: "/orders", element: <Suspense fallback={<LoadingSpinner />}><MyOrders /></Suspense> },
+      { path: "/address", element: <Suspense fallback={<LoadingSpinner />}><Address /></Suspense> },
+      { path: "/adminpanel2", element: <Suspense fallback={<LoadingSpinner />}><AdminPanel2 /></Suspense> },
+      { path: "/giftcard", element: <Suspense fallback={<LoadingSpinner />}><GiftCard /></Suspense> },
+      { path: "/helpandsupport", element: <Suspense fallback={<LoadingSpinner />}><HelpAndSupport /></Suspense> },
+      { path: "/returnpolicy", element: <Suspense fallback={<LoadingSpinner />}><ReturnPolicy /></Suspense> },
+      { path: "/faq", element: <Suspense fallback={<LoadingSpinner />}><FAQ /></Suspense> },
+      { path: "/ourstory", element: <Suspense fallback={<LoadingSpinner />}><OurStory /></Suspense> },
+      { path: "/careers", element: <Suspense fallback={<LoadingSpinner />}><Careers /></Suspense> },
+      { path: "/press", element: <Suspense fallback={<LoadingSpinner />}><Press /></Suspense> },
+      { path: "/investorrelations", element: <Suspense fallback={<LoadingSpinner />}><InvestorRelations /></Suspense> },
+      { path: "/privacypolicy", element: <Suspense fallback={<LoadingSpinner />}><PrivacyPolicy /></Suspense> },
+      { path: "/tc", element: <Suspense fallback={<LoadingSpinner />}><TermOfServices /></Suspense> },
 
-      { path: "/cancel", element: <Cancel /> },
 
-       // Signup route
+
+
+
+
+
+
+
+
+
     ],
   },
 ]);
