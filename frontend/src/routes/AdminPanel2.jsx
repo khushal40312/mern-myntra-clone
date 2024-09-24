@@ -82,7 +82,7 @@ export default function AdminPanel2() {
         }
 
         const token = localStorage.getItem('token');
-        fetch(`http://localhost:8009/api/items/admin/updateOrderStatus/${orderId}`, {
+        fetch(`https://myntra-clone-mern.onrender.com/api/items/admin/updateOrderStatus/${orderId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -148,7 +148,7 @@ export default function AdminPanel2() {
     }, [isAdmin, navigate]);
 
     if (loading) {
-        return <Skeleton count={5} />;
+        return <Skeleton count={20} />;
     }
 
     const formatDate = (dateString) => {
