@@ -222,7 +222,7 @@ export default function Address() {
             </div>
             <div className="card-body">
               {loading ? (
-                <Skeleton count={5} height={40} />
+                <Skeleton count={10} height={40} />
               ) : (
                 (!address || isEditing) && (
                   <form onSubmit={handleAddAddress}>
