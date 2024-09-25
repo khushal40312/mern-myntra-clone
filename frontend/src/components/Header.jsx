@@ -28,8 +28,10 @@ export default function Header() {
   const [input, setInput] = useState('');
   const [filteredItems, setFilteredItems] = useState([]);
   const [isLeftSlideOpen, setIsLeftSlideOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false); // State to toggle search bar
+ const [isSearchOpen, setIsSearchOpen] = useState(false); // State to toggle search bar
   const leftSlideRef = useRef(null); // Create a reference for the left side panel
+  const searchBarRef = useRef(null); // Reference for the search bar
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,7 +62,19 @@ export default function Header() {
 
     userDetail();
   }, [isLoggedIn]);
+ useEffect(() => {
+    const handleClickOutsideSearchBar = (event) => {
+      if (searchBarRef.current && !searchBarRef.current.contains(event.target) && !event.target.closest('.search_icon_btn')) {
+        setIsSearchOpen(false); // Close the search bar if clicked outside
+      }
+    };
 
+    document.addEventListener('mousedown', handleClickOutsideSearchBar);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutsideSearchBar);
+    };
+  }, [searchBarRef]);
   useEffect(() => {
     // Click event handler to detect clicks outside the left-side menu
     const handleClickOutside = (event) => {
@@ -194,7 +208,7 @@ export default function Header() {
         </nav>
 
         {/* Search bar: hidden by default on mobile */}
-        <div className={`search_bar ${isSearchOpen ? 'open' : ''}`}>
+        <div ref={searchBarRef} className={`search_bar ${isSearchOpen ? 'open' : ''}`}>
           <span className="search_icon_hide">
             <IoIosSearch size={20} />
           </span>
