@@ -1050,13 +1050,14 @@ p strong {
   }
 
   .search_bar.open {
-    display: flex; /* Shows the search bar when it's toggled open */
-    width: 80%; /* Adjust as per your needs */
+    display: flex;
+    width: 64%;
     background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     padding: 10px;
-  }
+    margin-top: -21px;
+}
 
   .suggestions {
     position: absolute;
@@ -1133,6 +1134,41 @@ p strong {
   }
   .w-335{
     width: 335px !important;
+  }
+  /* .action_name{
+
+    font-size: 10px !important;
+    margin: 0 !important;
+  }
+  .search_icon_btn{
+    margin-top: -1px;
+  } */
+  .action_bar {
+    min-width: 0;
+  }
+  .myz{
+
+    margin-top: 4px;
+  }
+  .action_bar{
+    margin-right: 0;
+  }
+  .action_name{
+
+    font-size: 9px;
+  }
+  .search_icon_btn{
+
+    margin-top: 3px;
+  }
+  .action_bar_mobile{
+
+    gap: 17px;
+  }
+  .dropdown-button{
+
+    margin-top: 0px;
+    margin-left: -16px;
   }
 }
 
@@ -1336,3 +1372,8 @@ p strong {
 }
 
 /* 212 148 */
+.my{
+
+  margin-right: 20px ;
+  margin-top:7px;
+}
