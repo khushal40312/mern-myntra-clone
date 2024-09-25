@@ -1170,6 +1170,10 @@ p strong {
     margin-top: 0px;
     margin-left: -16px;
   }
+  .margin{
+
+    margin-top: -8px !important;
+  }
 }
 
 /* Image styling */
@@ -1372,8 +1376,82 @@ p strong {
 }
 
 /* 212 148 */
-.my{
+/* .my{
 
   margin-right: 20px ;
   margin-top:7px;
 }
+body{
+
+  background-color: black !important;
+}
+header{
+
+  background-color: black !important;
+
+}
+header a{
+ 
+  
+  color: rgb(168, 114, 154) !important;
+
+}
+.myntra_home {
+  height: 71px;
+  width: 130px;
+  background: white;
+  border-radius: 45px;
+}
+.search_bar {
+  display: flex;
+  background: orange ;
+}
+.search_input{
+
+  background-color: rgb(168, 114, 154);
+}
+input::placeholder {
+  color: white;
+  opacity: 1;  
+} */
+/* .nav_bar a{
+
+  border-bottom: 0;
+}
+.action_name{
+
+  color: rgb(168, 114, 154);
+}
+.item-image{
+
+
+  border-radius: 10px;
+  background-color: rgb(168, 114, 154);
+}
+.item-name{
+
+  color: white;
+}
+.company-name{
+
+  color: white;
+}
+.footer_container{
+
+  background-color: black;
+}
+#Pc{
+
+  background-color: black;
+}
+h2{
+  color: white;
+}
+main{
+
+  background-color: black;
+}
+.bag-item-container{
+
+  background-color: black;
+} */
