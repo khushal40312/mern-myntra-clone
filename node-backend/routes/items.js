@@ -318,9 +318,9 @@ router.post('/create-checkout-session', async (req, res) => {
       price_data: {
         currency: 'inr',
         product_data: {
-          name: item.name,
+          name: item.item_name,  // Use item_name based on the screenshot
         },
-        unit_amount: item.current_price * 100,
+        unit_amount: item.current_price * 100,  // Stripe expects the price in paise for INR
       },
       quantity: 1,
     })),
@@ -331,16 +331,20 @@ router.post('/create-checkout-session', async (req, res) => {
 
   res.json({ id: session.id });
 });
+
 router.get('/confirm-payment/:sessionId', async (req, res) => {
   const { sessionId } = req.params;
-  
+
   try {
     // Fetch the session details from Stripe using the session ID
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status === 'paid') {
-      // Payment is confirmed
-      res.json({ paymentStatus: 'paid', products: session.line_items });
+      // Fetch line items associated with the session
+      const lineItems = await stripe.checkout.sessions.listLineItems(sessionId);
+
+      // Payment is confirmed, return the payment status and line items
+      res.json({ paymentStatus: 'paid', products: lineItems.data });
     } else {
       // Payment failed or is incomplete
       res.json({ paymentStatus: 'unpaid' });
