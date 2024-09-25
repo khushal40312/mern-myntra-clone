@@ -100,7 +100,7 @@ navigate("/")
 
                     <Link to="/signup" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 'normal' }}>
                         <button data-mdb-ripple-init type="button" className="btn btn-success btn-block">
-                            <span className="action_name my-1">Sign up</span>
+                            <span style={{fontSize: "14px"}} className=" my-1">Sign up</span>
                         </button>
                     </Link>
                    
