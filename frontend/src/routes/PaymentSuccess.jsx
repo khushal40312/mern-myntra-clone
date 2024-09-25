@@ -1,11 +1,13 @@
 import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
 
 export default function PaymentSuccess() {
     const [searchParams] = useSearchParams();
     const sessionId = searchParams.get('session_id');
     const navigate = useNavigate();
+  const BagItems = useSelector(store => store.bag);
 
     useEffect(() => {
         const confirmPayment = async () => {
@@ -26,7 +28,7 @@ export default function PaymentSuccess() {
                             'auth-token': localStorage.getItem('token'),
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify(result.products), // Include your product details
+                        body: JSON.stringify(BagItems[0]), // Include your product details
                     });
 
                     if (orderResponse.ok) {
