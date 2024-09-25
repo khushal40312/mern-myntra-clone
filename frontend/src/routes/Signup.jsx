@@ -27,50 +27,53 @@ export default function Signup() {
         }
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+   const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        // Basic form validation
-        if (credentials.password !== credentials.cpassword) {
-            toast.error("Passwords do not match!");
-            return;
-        }
+    // Basic form validation
+    if (credentials.password !== credentials.cpassword) {
+        toast.error("Passwords do not match!");
+        return;
+    }
 
-        const formData = new FormData();
-        formData.append('name', credentials.name);
-        formData.append('email', credentials.email);
-        formData.append('password', credentials.password);
-        formData.append('gender', credentials.gender);
-        
-        // Check if the user selected a picture; otherwise, append a default picture
-        if (credentials.picture) {
-            formData.append('picture', credentials.picture);
-        } 
+    const formData = new FormData();
+    formData.append('name', credentials.name);
+    formData.append('email', credentials.email);
+    formData.append('password', credentials.password);
+    formData.append('gender', credentials.gender);
+    
+    // Check if the user selected a picture; otherwise, append a default picture
+    if (credentials.picture) {
+        formData.append('picture', credentials.picture);
+    }
 
-        try {
-            const response = await fetch("https://myntra-clone-mern.onrender.com/api/auth/createuser", {
-                method: 'POST',
-                body: formData
-            });
-
+    // Use toast.promise to handle the signup process
+    toast.promise(
+        fetch("https://myntra-clone-mern.onrender.com/api/auth/createuser", {
+            method: 'POST',
+            body: formData
+        }).then(async response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-
             const json = await response.json();
             if (json.success) {
                 localStorage.setItem('token', json.authtoken);
                 dispatch(login());
                 navigate("/");
-                toast.success("You are signed up!");
+                return "You are signed up!";
             } else {
-                toast.error(json.message || "Signup failed! Please try again.");
+                throw new Error(json.message || "Signup failed! Please try again.");
             }
-        } catch (error) {
-            console.error('Signup failed:', error);
-            toast.error("Signup failed! Please try again.");
+        }),
+        {
+            loading: 'Signing up...',
+            success: <b>Signup successful!</b>,
+            error: <b>Signup failed! Please try again.</b>
         }
-    };
+    );
+};
+
     
     const isLoggedIn = useSelector(store => store.auth.isLoggedIn);
     useEffect(() => {
