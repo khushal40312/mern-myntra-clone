@@ -17,31 +17,33 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const response = await fetch("https://myntra-clone-mern.onrender.com/api/auth/login", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email: credentials.email, password: credentials.password })
-        });
-
-        const json = await response.json();
-    
-
-        if (json.success) {
-            localStorage.setItem('token', json.authtoken);
-            dispatch(login());
-            navigate("/");
-            toast.success("You Are Logged-in !")
-        }else {
-         
-            toast.error(json.message || "Login failed! Please check your credentials.");
-        }
+         toast.promise(
+           fetch("https://myntra-clone-mern.onrender.com/api/auth/login", {
+              method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: credentials.email, password: credentials.password })
+            })
+            .then(async (response) => {
+                const json = await response.json();
+                if (json.success) {
+                    localStorage.setItem('token', json.authtoken);
+                    dispatch(login());
+                    navigate("/");
+                    return "You Are Logged-in!";
+                } else {
+                    throw new Error(json.message || "Login failed! Please check your credentials.");
+                }
+            }),
+            {
+                loading: 'Logging in...',
+                success: <b>Logged in successfully!</b>,
+                error: (err) => <b>{err.message}</b>
+            }
+        );
     };
 
-    const onChange = (e) => {
-        setCredentials({ ...credentials, [e.target.name]: e.target.value });
-    };
 useEffect(()=>{
 
 if(isLoggedIn)
