@@ -265,7 +265,7 @@ export default function Header() {
             <div onClick={toggleDropdown} className="dropdown-button  d-flex flex-column">
               <div className="action_container mx-3">
                 <BsFillBagPlusFill />
-                <span className="action_name">Bag</span>
+                <span className="action_name myz">Bag</span>
                 {isLoggedIn ? (
                   <span className="bag-item-count">
                     {Array.isArray(BagItems) && BagItems.length > 0 && Array.isArray(BagItems[0]) ? BagItems[0].length : 0}
