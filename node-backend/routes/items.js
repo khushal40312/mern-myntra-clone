@@ -331,17 +331,20 @@ router.post('/create-checkout-session', async (req, res) => {
 
   res.json({ id: session.id });
 });
-
 router.get('/confirm-payment/:sessionId', async (req, res) => {
   const { sessionId } = req.params;
-  
+  const { products } = req.body;  // Accept products in request body
+
   try {
     // Fetch the session details from Stripe using the session ID
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status === 'paid') {
-      // Payment is confirmed
-      res.json({ paymentStatus: 'paid', products: session.line_items });
+      // Payment is confirmed, return the payment status and the products
+      res.json({
+        paymentStatus: 'paid',
+        products: products || [] // Return the products from the request body
+      });
     } else {
       // Payment failed or is incomplete
       res.json({ paymentStatus: 'unpaid' });
@@ -350,6 +353,7 @@ router.get('/confirm-payment/:sessionId', async (req, res) => {
     res.status(500).json({ error: 'Error fetching session data' });
   }
 });
+
 
 // Admin API to update the status of an order
 router.put('/admin/updateOrderStatus/:orderId', fetchuser, async (req, res) => {
