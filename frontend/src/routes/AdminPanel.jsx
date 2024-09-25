@@ -121,7 +121,8 @@ export default function AdminPanel() {
     );
 };
 
-    };
+
+
     useEffect(()=>{
         if (!isAdmin) {
             
