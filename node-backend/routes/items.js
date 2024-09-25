@@ -334,17 +334,14 @@ router.post('/create-checkout-session', async (req, res) => {
 
 router.get('/confirm-payment/:sessionId', async (req, res) => {
   const { sessionId } = req.params;
-
+  
   try {
     // Fetch the session details from Stripe using the session ID
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status === 'paid') {
-      // Fetch line items associated with the session
-      const lineItems = await stripe.checkout.sessions.listLineItems(sessionId);
-
-      // Payment is confirmed, return the payment status and line items
-      res.json({ paymentStatus: 'paid', products: lineItems.data });
+      // Payment is confirmed
+      res.json({ paymentStatus: 'paid', products: session.line_items });
     } else {
       // Payment failed or is incomplete
       res.json({ paymentStatus: 'unpaid' });
