@@ -322,7 +322,7 @@ router.post('/create-checkout-session', async (req, res) => {
         },
         unit_amount: item.current_price * 100,
       },
-      quantity: item.quantity,
+      quantity: 1,
     })),
     mode: 'payment',
     success_url: `${process.env.SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
