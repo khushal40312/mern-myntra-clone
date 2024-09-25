@@ -309,43 +309,47 @@ router.get('/trackOrder', fetchuser, async (req, res) => {
     res.status(500).send("Error fetching order details");
   }
 });
-router.post("/create-checkout-session", async (req, res) => {
-  try {
-    const { product } = req.body;  // 'product' is an array of items from the client
+app.post('/api/items/create-checkout-session', async (req, res) => {
+  const { product } = req.body;
 
-    // Map the products array to generate line items for Stripe
-    const lineItems = product.map((productItem) => {
-      // Debugging image issue: Ensure that productItem.image is a valid URL
-
-
-      return {
-        price_data: {
-          currency: "inr",  // Change to Indian Rupees
-          product_data: {
-            name: productItem.item_name,
-            images: [productItem.image],  // Ensure this is a full URL
-          },
-          unit_amount: Math.round(productItem.current_price * 100),  // Convert to paise (smallest currency unit)
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ['card'],
+    line_items: product.map(item => ({
+      price_data: {
+        currency: 'inr',
+        product_data: {
+          name: item.name,
         },
-        quantity: 1,  // Can be adjusted based on actual quantity
-      };
-    });
+        unit_amount: item.current_price * 100,
+      },
+      quantity: item.quantity,
+    })),
+    mode: 'payment',
+    success_url: `${process.env.CLIENT_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${process.env.CLIENT_URL}/cancel`,
+  });
 
-    // Create a Stripe checkout session
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: lineItems,
-      mode: "payment",
-      success_url: process.env.SUCCESS_URL || "http://localhost:5173/success",  // Use env variable for success URL
-      cancel_url: process.env.CANCEL_URL || "http://localhost:5173/cancel",    // Use env variable for cancel URL
-    });
+  res.json({ id: session.id });
+});
+app.get('/api/items/confirm-payment/:sessionId', async (req, res) => {
+  const { sessionId } = req.params;
+  
+  try {
+    // Fetch the session details from Stripe using the session ID
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    res.json({ id: session.id });
+    if (session.payment_status === 'paid') {
+      // Payment is confirmed
+      res.json({ paymentStatus: 'paid', products: session.line_items });
+    } else {
+      // Payment failed or is incomplete
+      res.json({ paymentStatus: 'unpaid' });
+    }
   } catch (error) {
-    console.error("Stripe Error:", error.message);
-    res.status(500).json({ error: "Failed to create checkout session" });
+    res.status(500).json({ error: 'Error fetching session data' });
   }
 });
+
 // Admin API to update the status of an order
 router.put('/admin/updateOrderStatus/:orderId', fetchuser, async (req, res) => {
   try {
