@@ -251,8 +251,8 @@ export default function Header() {
           {!isLoggedIn ? (
             <div className="action_container login">
               <IoPersonCircleSharp />
-              <Link to="/login" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}>
-                <span className="action_name my-1 mx-3">Login</span>
+              <Link className='action_name margin my-1 mx-3' to="/login" style={{ textDecoration: 'none', color: 'inherit', fontWeight: 'bold' }}>
+              Login
               </Link>
             </div>
           ) : (
