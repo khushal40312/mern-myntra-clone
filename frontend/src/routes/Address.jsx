@@ -164,48 +164,24 @@ export default function Address() {
         toast.error("Failed to place order.");
       }
     } else if (paymentMethod === "online") {
-      // Handle Stripe payment and create order first
-      try {
-        const createOrderResponse = await fetch("https://myntra-clone-mern.onrender.com/api/items/createOrder", {
-          method: "POST",
-          headers: {
-            'auth-token': token,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(BagItems[0])
-        });
+    try {
+      const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/create-checkout-session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ product: BagItems[0] }),
+      });
 
-        if (!createOrderResponse.ok) {
-          const result = await createOrderResponse.json();
-          toast.error(`Failed to place order: ${result.error}`);
-          return;
-        }
+      const session = await response.json();
+      const stripe = await loadStripe("pk_test_51Pyq0yLoogz1SBLrYKOeiBcOJMzY4P3tjYznMWPc04eXhMaq7i9S6jDdMFDt389bvhnTvCezJzVhPogsKhoqjJkZ00LTZ9sdJm");
 
-        toast.success("Please wait, redirecting to Stripe...");
-        const stripe = await loadStripe("pk_test_51Pyq0yLoogz1SBLrYKOeiBcOJMzY4P3tjYznMWPc04eXhMaq7i9S6jDdMFDt389bvhnTvCezJzVhPogsKhoqjJkZ00LTZ9sdJm");
-
-        const body = { product: BagItems[0] };
-        const headers = { "Content-Type": "application/json" };
-
-        const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/create-checkout-session", {
-          method: "POST",
-          headers,
-          body: JSON.stringify(body),
-        });
-        const session = await response.json();
-
-        const result = await stripe.redirectToCheckout({ sessionId: session.id });
-        if (result.error) {
-          console.error(result.error);
-          toast.error("Stripe error occurred: " + result.error.message);
-        }
-      } catch (error) {
-        console.error("Error during checkout:", error);
-        toast.error("Failed to create checkout session.");
+      const result = await stripe.redirectToCheckout({ sessionId: session.id });
+      if (result.error) {
+        toast.error(result.error.message);
       }
-    } else {
-      toast.error("Select Payment Method First");
+    } catch (error) {
+      toast.error("Error creating checkout session");
     }
+  }
   };
 
   const handlePaymentChange = (e) => {
