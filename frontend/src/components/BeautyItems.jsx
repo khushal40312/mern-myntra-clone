@@ -73,7 +73,7 @@ export default function BeautyItems({ items,allItems }) {
           <span className="discount">({items.discount_percentage}% OFF)</span>
         </div>
 
-        {elementFound && isLoggedIn ? (
+        {/*  {elementFound && isLoggedIn ? (
           <button onClick={handleRemoveItem} className="btn btn-add-bag btn-danger">
             <MdDelete /> Remove
           </button>
@@ -82,7 +82,7 @@ export default function BeautyItems({ items,allItems }) {
             <IoMdAddCircleOutline /> Add to Bag
           </button>
         )}
-      </div>
+     */   }      </div>
       <Modal show={showModal} onHide={closeModal} centered scrollable>
         <Modal.Header closeButton>
           <Modal.Title>{selectedItem?.item_name}</Modal.Title>
