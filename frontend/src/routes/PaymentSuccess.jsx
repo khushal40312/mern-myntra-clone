@@ -7,11 +7,12 @@ export default function PaymentSuccess() {
     const [searchParams] = useSearchParams();
     const sessionId = searchParams.get('session_id');
     const navigate = useNavigate();
-  const BagItems = useSelector(store => store.bag);
+    const BagItems = useSelector(store => store.bag);
 
     useEffect(() => {
         const confirmPayment = async () => {
             try {
+                // Confirm payment
                 const response = await fetch(`https://myntra-clone-mern.onrender.com/api/items/confirm-payment/${sessionId}`, {
                     method: 'GET',
                     headers: {
@@ -21,7 +22,7 @@ export default function PaymentSuccess() {
                 const result = await response.json();
 
                 if (result.paymentStatus === 'paid') {
-                    // Now place the order in the backend
+                    // Place the order in the backend
                     const orderResponse = await fetch("https://myntra-clone-mern.onrender.com/api/items/createOrder", {
                         method: "POST",
                         headers: {
@@ -32,25 +33,34 @@ export default function PaymentSuccess() {
                     });
 
                     if (orderResponse.ok) {
-                        toast.success("Order placed successfully!");
-                        navigate('/orders');
+                        return 'Order placed successfully!';
                     } else {
-                        toast.error("Failed to place order.");
+                        throw new Error('Failed to place order.');
                     }
                 } else {
-                    toast.error("Payment failed. Please try again.");
-                    navigate('/checkout');
+                    throw new Error('Payment failed. Please try again.');
                 }
             } catch (error) {
-                toast.error("Error confirming payment.");
-                navigate('/checkout');
+                throw new Error('Error confirming payment.');
             }
         };
 
         if (sessionId) {
-            confirmPayment();
+            // Using toast.promise to handle the confirmation and order placement process
+            toast.promise(
+                confirmPayment(),
+                {
+                    loading: 'Processing payment...',
+                    success: <b>Order placed successfully!</b>,
+                    error: <b>Payment failed or order could not be placed.</b>,
+                }
+            ).then(() => {
+                navigate('/orders'); // Redirect on success
+            }).catch(() => {
+                navigate('/cancel'); // Redirect on failure
+            });
         }
-    }, [sessionId, navigate]);
+    }, [sessionId, BagItems, navigate]);
 
-    return <div style={{marginTop:"100px"}} className='container text-center'>Processing payment...</div>;
+    return <div style={{ marginTop: "100px" }} className='container text-center'>Processing payment...</div>;
 }
