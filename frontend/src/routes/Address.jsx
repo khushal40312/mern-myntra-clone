@@ -164,6 +164,8 @@ export default function Address() {
         toast.error("Failed to place order.");
       }
     } else if (paymentMethod === "online") {
+              toast.success("Please wait, redirecting to Stripe...");
+
     try {
       const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/create-checkout-session", {
         method: "POST",
