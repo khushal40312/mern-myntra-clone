@@ -10,7 +10,7 @@ export default function PaymentSuccess() {
     useEffect(() => {
         const confirmPayment = async () => {
             try {
-                const response = await fetch(`/api/items/confirm-payment/${sessionId}`, {
+                const response = await fetch(`https://myntra-clone-mern.onrender.com/api/items/confirm-payment/${sessionId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
