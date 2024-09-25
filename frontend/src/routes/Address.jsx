@@ -81,48 +81,53 @@ export default function Address() {
     
     }
     },[])
-  const handleAddAddress = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/saveAddress", {
-        method: 'POST',
-        headers: {
-          'auth-token': token,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+ const handleAddAddress = async (e) => {
+  e.preventDefault();
+  
+  const saveSettings = async () => {
+    const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/saveAddress", {
+      method: 'POST',
+      headers: {
+        'auth-token': token,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to save address');
+    }
+    const result = await response.json();
+    setAddress(result);  // Set the added address as the current one
+    setIsEditing(false);  // Hide the form after adding the address
+  };
+const handleRemoveAddress = async () => {
+  const removeAddress = async () => {
+    const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/deleteAddress", {
+      method: 'DELETE',
+      headers: {
+        'auth-token': token,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
       const result = await response.json();
-      setAddress(result);  // Set the added address as the current one
-      toast.success("Address added successfully!");
-      setIsEditing(false);  // Hide the form after adding the address
-    } catch (error) {
-      toast.error("Failed to add address");
+      throw new Error(result.error || 'Failed to remove address');
     }
+    setAddress(null);  // Remove the address and show the form again
   };
 
-  const handleRemoveAddress = async () => {
-    try {
-      const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/deleteAddress", {
-        method: 'DELETE',
-        headers: {
-          'auth-token': token,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        setAddress(null);  // Remove the address and show the form again
-        toast.success("Address removed successfully!");
-      } else {
-        const result = await response.json();
-        toast.error(`Failed to remove address: ${result.error}`);
-      }
-    } catch (error) {
-      console.error("Error removing address:", error);
-      toast.error("Failed to remove address");
+  toast.promise(
+    removeAddress(),
+    {
+      loading: 'Removing address...',
+      success: <b>Address removed successfully!</b>,
+      error: <b>Failed to remove address</b>,
     }
-  };
+  );
+};
+
 
   const handleEditAddress = () => {
     setFormData(address);  // Prefill the form with the existing address
@@ -130,61 +135,65 @@ export default function Address() {
   };
 
   const handlePlaceOrder = async () => {
-    if (!address) {
-      toast.error("Please add an address before placing an order.");
-      return;
-    }
+  if (!address) {
+    toast.error("Please add an address before placing an order.");
+    return;
+  }
 
-    if (totalItem === 0) {
-      toast.error("No items in the cart to place an order.");
-      return;
-    }
+  if (totalItem === 0) {
+    toast.error("No items in the cart to place an order.");
+    return;
+  }
 
+  const placeOrder = async () => {
     if (paymentMethod === 'cash') {
       // Handle Cash on Delivery
-      try {
-        const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/createOrder", {
-          method: "POST",
-          headers: {
-            'auth-token': token,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(BagItems[0])
-        });
+      const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/createOrder", {
+        method: "POST",
+        headers: {
+          'auth-token': token,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(BagItems[0]),
+      });
 
-        if (response.ok) {
-          toast.success("Order placed successfully!");
-          navigate('/orders');  // Redirect to the orders page
-        } else {
-          const result = await response.json();
-          toast.error(`Failed to place order: ${result.error}`);
-        }
-      } catch (error) {
-        console.error("Error placing order:", error);
-        toast.error("Failed to place order.");
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(result.error || "Failed to place order");
       }
+      navigate('/orders');  // Redirect to the orders page
     } else if (paymentMethod === "online") {
-              toast.success("Please wait, redirecting to Stripe...");
-
-    try {
+      // Handle Stripe payment and create order first
       const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ product: BagItems[0] }),
       });
 
+      if (!response.ok) {
+        throw new Error("Failed to create checkout session");
+      }
+
       const session = await response.json();
       const stripe = await loadStripe("pk_test_51Pyq0yLoogz1SBLrYKOeiBcOJMzY4P3tjYznMWPc04eXhMaq7i9S6jDdMFDt389bvhnTvCezJzVhPogsKhoqjJkZ00LTZ9sdJm");
 
       const result = await stripe.redirectToCheckout({ sessionId: session.id });
       if (result.error) {
-        toast.error(result.error.message);
+        throw new Error(result.error.message || "Stripe error occurred");
       }
-    } catch (error) {
-      toast.error("Error creating checkout session");
     }
-  }
   };
+
+  toast.promise(
+    placeOrder(),
+    {
+      loading: 'Placing your order...',
+      success: <b>Order placed successfully!</b>,
+      error: <b>Failed to place order</b>,
+    }
+  );
+};
+
 
   const handlePaymentChange = (e) => {
     setPaymentMethod(e.target.value);  // Set the selected payment method
