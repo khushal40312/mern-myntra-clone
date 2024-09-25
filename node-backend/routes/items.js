@@ -309,7 +309,7 @@ router.get('/trackOrder', fetchuser, async (req, res) => {
     res.status(500).send("Error fetching order details");
   }
 });
-router.post('/api/items/create-checkout-session', async (req, res) => {
+router.post('/create-checkout-session', async (req, res) => {
   const { product } = req.body;
 
   const session = await stripe.checkout.sessions.create({
@@ -331,7 +331,7 @@ router.post('/api/items/create-checkout-session', async (req, res) => {
 
   res.json({ id: session.id });
 });
-router.get('/api/items/confirm-payment/:sessionId', async (req, res) => {
+router.get('/confirm-payment/:sessionId', async (req, res) => {
   const { sessionId } = req.params;
   
   try {
