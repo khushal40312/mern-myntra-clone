@@ -73,15 +73,6 @@ export default function ElectronicsItems({ items,allItems }) {
           <span className="discount">({items.discount_percentage}% OFF)</span>
         </div>
 
-        {elementFound && isLoggedIn ? (
-          <button onClick={handleRemoveItem} className="btn btn-add-bag btn-danger">
-            <MdDelete /> Remove
-          </button>
-        ) : (
-          <button className="btn-add-bag" onClick={!localStorage.getItem('token') ? Loginfirst : handleItem}>
-            <IoMdAddCircleOutline /> Add to Bag
-          </button>
-        )}
       </div>
       <Modal show={showModal} onHide={closeModal} centered scrollable>
         <Modal.Header closeButton>
