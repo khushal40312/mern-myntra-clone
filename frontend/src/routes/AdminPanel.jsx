@@ -39,25 +39,33 @@ export default function AdminPanel() {
         }
     });
 
-    const deleteItem = async (id) => {
-        try {
-            const response = await fetch(`https://myntra-clone-mern.onrender.com/api/items/deleteadmin/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-            const json = await response.json();
-
-            if (json.message === 'Item deleted successfully') {
-                dispatch(itemsActions.removeItem(id));
-                toast.success('Item deleted successfully');
+ const deleteItem = async (id) => {
+    const removeItem = async () => {
+        const response = await fetch(`https://myntra-clone-mern.onrender.com/api/items/deleteadmin/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
             }
-        } catch (error) {
-            console.error('Failed to delete item:', error);
-            toast.error('Failed to delete item');
+        });
+
+        const json = await response.json();
+        if (json.message === 'Item deleted successfully') {
+            dispatch(itemsActions.removeItem(id));
+        } else {
+            throw new Error('Failed to delete item');
         }
     };
+
+    toast.promise(
+        removeItem(),
+        {
+            loading: 'Deleting item...',
+            success: <b>Item deleted successfully!</b>,
+            error: <b>Failed to delete item.</b>,
+        }
+    );
+};
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -79,34 +87,40 @@ export default function AdminPanel() {
     };
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+   const handleSubmit = (e) => {
+    e.preventDefault();
 
-        axios.post('https://myntra-clone-mern.onrender.com/api/items/admin', itemData)
-            .then(response => {
-                dispatch(itemsActions.addItem(itemData));
-                toast.success('Item added successfully');
+    const addItem = async () => {
+        await axios.post('https://myntra-clone-mern.onrender.com/api/items/admin', itemData);
+        dispatch(itemsActions.addItem(itemData));
 
-                setItemData({
-                    id: "",
-                    category: "",
-                    image: "",
-                    company: "",
-                    item_name: "",
-                    original_price: "",
-                    current_price: "",
-                    discount_percentage: "",
-                    rating: {
-                        stars: "",
-                        count: ""
-                    },
-                    description:""
-                });
-            })
-            .catch(error => {
-                console.error('There was an error adding the item!', error);
-                toast.error('Error adding the item');
-            });
+        setItemData({
+            id: "",
+            category: "",
+            image: "",
+            company: "",
+            item_name: "",
+            original_price: "",
+            current_price: "",
+            discount_percentage: "",
+            rating: {
+                stars: "",
+                count: ""
+            },
+            description: ""
+        });
+    };
+
+    toast.promise(
+        addItem(),
+        {
+            loading: 'Adding item...',
+            success: <b>Item added successfully!</b>,
+            error: <b>Failed to add item.</b>,
+        }
+    );
+};
+
     };
     useEffect(()=>{
         if (!isAdmin) {
