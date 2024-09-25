@@ -81,7 +81,7 @@ export default function Address() {
     
     }
     },[])
- const handleAddAddress = async (e) => {
+const handleAddAddress = async (e) => {
   e.preventDefault();
   
   const saveSettings = async () => {
@@ -101,6 +101,16 @@ export default function Address() {
     setAddress(result);  // Set the added address as the current one
     setIsEditing(false);  // Hide the form after adding the address
   };
+
+  toast.promise(
+    saveSettings(),
+    {
+      loading: 'Saving address...',
+      success: <b>Address saved successfully!</b>,
+      error: <b>Failed to save address</b>,
+    }
+  );
+};
 const handleRemoveAddress = async () => {
   const removeAddress = async () => {
     const response = await fetch("https://myntra-clone-mern.onrender.com/api/items/deleteAddress", {
