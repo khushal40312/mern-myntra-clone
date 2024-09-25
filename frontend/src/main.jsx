@@ -36,7 +36,7 @@ const Press = lazy(() => import("./routes/Press.jsx"))
 const InvestorRelations = lazy(() => import("./routes/InvestorRelations.jsx"))
 const PrivacyPolicy = lazy(() => import("./routes/PrivacyPolicy.jsx"))
 const TermOfServices = lazy(() => import("./routes/TermOfServices.jsx"))
-
+const PaymentSuccess=lazy(() => import("./routes/PaymentSuccess.jsx"))
 
 
 
@@ -77,6 +77,8 @@ const router = createBrowserRouter([
       { path: "/investorrelations", element: <Suspense fallback={<LoadingSpinner />}><InvestorRelations /></Suspense> },
       { path: "/privacypolicy", element: <Suspense fallback={<LoadingSpinner />}><PrivacyPolicy /></Suspense> },
       { path: "/tc", element: <Suspense fallback={<LoadingSpinner />}><TermOfServices /></Suspense> },
+      { path: "/PaymentSuccess", element: <Suspense fallback={<LoadingSpinner />}><PaymentSuccess /></Suspense> },
+
 
 
 
