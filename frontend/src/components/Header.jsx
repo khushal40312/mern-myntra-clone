@@ -293,17 +293,32 @@ export default function Header() {
               <div className="dropdown">
                 <div className="dropdown-contentpr">
                   <div className="d-flex justify-content-center">
-                    <img
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        borderRadius: "50%",
-                        objectFit: "cover",
-                        border: "4px solid rgb(168, 114, 154)"
-                      }}
-                      src={`https://myntra-clone-mern.onrender.com/uploads${userData.picture?.split('/uploads')[1]}`}
-                      alt="Profile"
-                    />
+                    {userData?.picture ? (
+  <img
+    style={{
+      width: "100px",
+      height: "100px",
+      borderRadius: "50%",
+      objectFit: "cover",
+      border: "4px solid rgb(168, 114, 154)"
+    }}
+    src={`https://myntra-clone-mern.onrender.com/uploads${userData.picture.split('/uploads')[1]}`}
+    alt="Profile"
+  />
+) : (
+  <img
+    style={{
+      width: "100px",
+      height: "100px",
+      borderRadius: "50%",
+      objectFit: "cover",
+      border: "4px solid rgb(168, 114, 154)"
+    }}
+    src="images/defProfile.jpg" // Add a default image URL here
+    alt="Default Profile"
+  />
+)}
+
                   </div>
                   <div className="d-flex justify-content-center">
                     Your Profile
@@ -341,7 +356,20 @@ export default function Header() {
         <button onClick={toggleLeftSlide} className="close_btn"><FaWindowClose size={29} /></button>
         {userData && (
           <div className="user_info">
-            <img className="user_image" src={`https://myntra-clone-mern.onrender.com/uploads${userData.picture.split('/uploads')[1]}`} alt="User" />
+            {userData?.picture ? (
+  <img
+    className="user_image"
+    src={`https://myntra-clone-mern.onrender.com/uploads${userData.picture.split('/uploads')[1]}`}
+    alt="User"
+  />
+) : (
+  <img
+    className="user_image"
+    src="images/defProfile.jpg" // Add a default image URL here
+    alt="Default User"
+  />
+)}
+
             <p>{userData.name}</p>
           </div>
         )}
