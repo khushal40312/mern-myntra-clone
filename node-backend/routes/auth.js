@@ -82,7 +82,7 @@ router.post('/createuser',
       await user.save();
 
       const data = { user: { id: user.id } };
-      const authtoken = jwt.sign(data, JWT_SECRET, { expiresIn: '1h' });  // JWT token with 1-hour expiration
+      const authtoken = jwt.sign(data, JWT_SECRET);  // JWT token with 1-hour expiration
       success = true;
       res.json({ success, authtoken });
 
@@ -119,7 +119,7 @@ router.post('/login',
       }
 
       const data = { user: { id: user.id } };
-      const authtoken = jwt.sign(data, JWT_SECRET, { expiresIn: '1h' });
+      const authtoken = jwt.sign(data, JWT_SECRET);
       success = true;
       res.json({ success, authtoken });
 
