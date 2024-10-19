@@ -4,12 +4,7 @@ import { login } from '../store/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-notifications-component/dist/theme.css';
 import toast from 'react-hot-toast';
-import { decode as jwt_decode } from 'jwt-decode';
-
-
-
-
-
+import jwt_decode from 'jwt-decode'; // Correct default export import
 
 export default function Login() {
   const isLoggedIn = useSelector(store => store.auth.isLoggedIn);
@@ -32,7 +27,7 @@ export default function Login() {
         const json = await response.json();
         if (json.success) {
           const token = json.authtoken;
-          const decodedToken = jwt_decode(token);
+          const decodedToken = jwt_decode(token); // Correct usage of jwt_decode
           localStorage.setItem('token', token);
           localStorage.setItem('token-expiration', decodedToken.exp);
 
@@ -82,6 +77,7 @@ export default function Login() {
 
     return () => clearInterval(interval);
   }, [navigate]);
+}
 
   return (
     <>
