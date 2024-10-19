@@ -112,16 +112,32 @@ export default function Header() {
 
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    dispatch(logout());
-  dispatch(bagActions.clearBag())
-    setIsOpen(false);
-    setIsAdmin(false);
-    toast.success("Logged out successfully!");
-    navigate('/');
-    dispatch(setAdminFalse());
-  };
+ const handleLogout = () => {
+  // Remove the auth token from localStorage
+  localStorage.removeItem("token");
+  
+  // Dispatch the logout action to update the Redux store
+  dispatch(logout());
+  
+  // Clear the shopping bag state
+  dispatch(bagActions.clearBag());
+
+  // Close any open dropdowns
+  setIsOpen(false);
+
+  // Reset the admin state and user-specific data
+  setIsAdmin(false);
+
+  // Notify the user of successful logout
+  toast.success("Logged out successfully!");
+
+  // Redirect the user to the homepage or login page
+  navigate('/');
+
+  // Reset the admin flag in Redux store
+  dispatch(setAdminFalse());
+};
+
   
   const handleChange = (e) => {
     const value = e.target.value;
