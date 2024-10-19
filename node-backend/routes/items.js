@@ -80,7 +80,7 @@ router.delete('/deleteitem/:id', fetchuser, async (req, res) => {
       return res.status(404).send("Item not found");
     }
 console.log(req.user.id)
-    console.log(cart.user)
+    console.log(cart.user.id)
     // Allow deletion only if the user owns this item
     if (cart.user.toString() !== req.user.id) {
       return res.status(401).send("Not Allowed");
