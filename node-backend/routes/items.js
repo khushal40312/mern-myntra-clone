@@ -79,12 +79,11 @@ router.delete('/deleteitem/:id', fetchuser, async (req, res) => {
     if (!cart) {
       return res.status(404).send("Item not found");
     }
-console.log(req.user.id)
-    console.log(cart.user.id)
+
     // Allow deletion only if the user owns this item
-    if (cart.user.toString() !== req.user.id) {
-      return res.status(401).send("Not Allowed");
-    }
+if (!cart.user.equals(mongoose.Types.ObjectId(req.user.id))) {
+  return res.status(401).send("Not Allowed");
+}
 
     // Delete the item
     await CartID.deleteOne({ id: req.params.id });
