@@ -4,7 +4,8 @@ import { login } from '../store/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-notifications-component/dist/theme.css';
 import toast from 'react-hot-toast';
-import jwt_decode from 'jwt-decode';
+import { default as jwt_decode } from 'jwt-decode';
+
 
 export default function Login() {
   const isLoggedIn = useSelector(store => store.auth.isLoggedIn);
