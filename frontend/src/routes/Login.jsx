@@ -77,7 +77,7 @@ export default function Login() {
 
     return () => clearInterval(interval);
   }, [navigate]);
-}
+
 
   return (
     <>
