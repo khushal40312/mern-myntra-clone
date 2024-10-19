@@ -5,7 +5,7 @@ export default {
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ['jwt-decode'], // Exclude jwt-decode from the bundle
+      // No need to add jwt-decode to external here
     },
   },
 };
