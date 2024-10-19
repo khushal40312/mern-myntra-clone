@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { login, logout } from '../store/authSlice'; // Add logout action for token expiration
 import { FcPicture } from "react-icons/fc";
 import toast from 'react-hot-toast';
-import { jwt_decode } from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
  // Import jwt-decode for decoding token
 
 export default function Signup() {
