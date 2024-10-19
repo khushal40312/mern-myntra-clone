@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../store/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
+   import jwt_decode from 'jwt-decode';
 import 'react-notifications-component/dist/theme.css';
 import toast from 'react-hot-toast';
 
@@ -14,35 +15,43 @@ export default function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch(); // Use dispatch to trigger actions
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
-         toast.promise(
-           fetch("https://myntra-clone-mern.onrender.com/api/auth/login", {
-              method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email: credentials.email, password: credentials.password })
-            })
-            .then(async (response) => {
-                const json = await response.json();
-                if (json.success) {
-                    localStorage.setItem('token', json.authtoken);
-                    dispatch(login());
-                    navigate("/");
-                    return "You Are Logged-in!";
-                } else {
-                    throw new Error(json.message || "Login failed! Please check your credentials.");
-                }
-            }),
-            {
-                loading: 'Logging in...',
-                success: <b>Logged in successfully!</b>,
-                error: (err) => <b>{err.message}</b>
+const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    toast.promise(
+        fetch("https://myntra-clone-mern.onrender.com/api/auth/login", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email: credentials.email, password: credentials.password })
+        })
+        .then(async (response) => {
+            const json = await response.json();
+            if (json.success) {
+                const token = json.authtoken;
+                const decodedToken = jwt_decode(token);
+                
+                // Store token and expiration time in localStorage
+                localStorage.setItem('token', token);
+                localStorage.setItem('token-expiration', decodedToken.exp);
+
+                dispatch(login());
+                navigate("/");
+                return "You Are Logged-in!";
+            } else {
+                throw new Error(json.message || "Login failed! Please check your credentials.");
             }
-        );
-    };
+        }),
+        {
+            loading: 'Logging in...',
+            success: <b>Logged in successfully!</b>,
+            error: (err) => <b>{err.message}</b>
+        }
+    );
+};
+
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
