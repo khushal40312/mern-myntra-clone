@@ -1,12 +1,12 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import react from '@vitejs/plugin-react';
 
 // vite.config.js
 export default {
+  plugins: [react()],
   build: {
     rollupOptions: {
-      external: ['jwt-decode'] // Add jwt-decode to external
-    }
-  }
+      external: ['jwt-decode'], // Exclude jwt-decode from the bundle
+    },
+  },
 };
 
