@@ -70,26 +70,17 @@ router.get('/fetchallusercartItems', fetchuser, async (req, res) => {
   }
 });
 
-
 router.delete('/deleteitem/:id', fetchuser, async (req, res) => {
   try {
-    // Find the item in the cart by matching the 'id' field from the request parameter
-    let cart = await CartID.findOne({ id: req.params.id });
+    // Find the item in the cart by matching both the 'id' and the user
+    let cart = await CartID.findOne({ id: req.params.id, user: req.user.id });
 
     if (!cart) {
       return res.status(404).send("Item not found");
     }
 
-    // Allow deletion only if the user owns this item
-
-
-if (!cart.user.equals(new mongoose.Types.ObjectId(req.user.id))) {
-  return res.status(401).send("Not Allowed");
-}
-
-
     // Delete the item
-    await CartID.deleteOne({ id: req.params.id });
+    await CartID.deleteOne({ id: req.params.id, user: req.user.id });
 
     res.json({ "Success": "Item has been deleted", cart: cart });
   } catch (error) {
